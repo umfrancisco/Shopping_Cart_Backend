@@ -1,9 +1,9 @@
 package com.umfrancisco.shoppingcart.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
-import com.umfrancisco.shoppingcart.exception.AlreadyExistsException;
 import com.umfrancisco.shoppingcart.exception.ResourceNotFoundException;
 import com.umfrancisco.shoppingcart.model.Category;
 import com.umfrancisco.shoppingcart.repository.CategoryRepository;
@@ -11,7 +11,7 @@ import com.umfrancisco.shoppingcart.repository.CategoryRepository;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 	
-	private final CategoryRepository categoryRepository;
+	private CategoryRepository categoryRepository;
 	
 	public CategoryServiceImpl(CategoryRepository categoryRepository) {
 		this.categoryRepository = categoryRepository;
@@ -35,10 +35,8 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public Category save(Category category) {
-		return Optional.of(category)
-				.filter(c -> !categoryRepository.existsByName(c.getName()))
-				.map(categoryRepository::save)
-				.orElseThrow(() -> new AlreadyExistsException(category.getName().toUpperCase()+" already exists"));
+		System.out.println(this.getClass()+" - "+LocalDateTime.now()+": "+category);
+		return categoryRepository.save(category);
 	}
 
 	@Override

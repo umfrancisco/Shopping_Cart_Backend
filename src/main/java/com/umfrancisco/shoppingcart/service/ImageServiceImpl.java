@@ -17,6 +17,10 @@ public class ImageServiceImpl implements ImageService {
 		this.imageRepository = imageRepository;
 		this.productService = productService;
 	}
+	
+	public List<Image> findAll() {
+		return imageRepository.findAll();
+	}
 
 	@Override
 	public Image findById(Long id) {

@@ -3,8 +3,6 @@ package com.umfrancisco.shoppingcart.service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 import com.umfrancisco.shoppingcart.exception.ProductNotFoundException;
 import com.umfrancisco.shoppingcart.model.Category;
@@ -26,11 +24,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product save(ProductRequest request) {
-		Category category = Optional.ofNullable(categoryRepository.findByName(request.getCategory().getName()))
-				.orElseGet(() -> {
-					Category newCategory = new Category(request.getCategory().getName());
-					return categoryRepository.save(newCategory);
-				});
+		Category category = categoryRepository.findByName(request.getCategory().getName());
 		request.setCategory(category);
 		var product = createProduct(request, category);
 		System.out.println(LocalDateTime.now()+": "+product);

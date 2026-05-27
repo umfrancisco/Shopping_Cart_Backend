@@ -5,6 +5,7 @@ import java.util.List;
 import com.umfrancisco.shoppingcart.model.Image;
 
 public interface ImageService {
+	List<Image> findAll();
 	Image findById(Long id);
 	void deleteById(Long id);
 	List<Image> save(List<String> imagesUrl, Long productId);
