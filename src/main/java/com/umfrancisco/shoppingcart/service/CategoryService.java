@@ -8,7 +8,7 @@ public interface CategoryService {
 	Category findById(Long id);
 	Category findByName(String name);
 	List<Category> findAll();
-	Category add(Category category);
+	Category save(Category category);
 	Category update(Category category, Long id);
 	void deleteById(Long id);
 }

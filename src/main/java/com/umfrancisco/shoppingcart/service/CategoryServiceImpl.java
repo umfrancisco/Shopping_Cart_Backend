@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public Category add(Category category) {
+	public Category save(Category category) {
 		return Optional.of(category)
 				.filter(c -> !categoryRepository.existsByName(c.getName()))
 				.map(categoryRepository::save)

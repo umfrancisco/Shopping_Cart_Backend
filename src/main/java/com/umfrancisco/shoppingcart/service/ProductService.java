@@ -5,7 +5,7 @@ import com.umfrancisco.shoppingcart.model.Product;
 import com.umfrancisco.shoppingcart.request.ProductRequest;
 
 public interface ProductService {
-	Product add(ProductRequest product);
+	Product save(ProductRequest product);
 	Product findById(Long productId);
 	void deleteById(Long productId);
 	Product update(ProductRequest product, Long productId);

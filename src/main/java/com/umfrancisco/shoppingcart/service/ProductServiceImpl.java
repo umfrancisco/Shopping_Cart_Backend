@@ -25,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product add(ProductRequest request) {
+	public Product save(ProductRequest request) {
 		Category category = Optional.ofNullable(categoryRepository.findByName(request.getCategory().getName()))
 				.orElseGet(() -> {
 					Category newCategory = new Category(request.getCategory().getName());
