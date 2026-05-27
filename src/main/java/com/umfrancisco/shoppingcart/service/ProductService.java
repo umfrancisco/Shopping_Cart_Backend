@@ -2,9 +2,10 @@ package com.umfrancisco.shoppingcart.service;
 
 import java.util.List;
 import com.umfrancisco.shoppingcart.model.Product;
+import com.umfrancisco.shoppingcart.request.ProductRequest;
 
 public interface ProductService {
-	Product add(Product product);
+	Product add(ProductRequest product);
 	Product findById(Long productId);
 	void deleteById(Long productId);
 	void update(Product product, Long productId);
