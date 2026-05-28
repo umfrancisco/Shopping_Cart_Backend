@@ -1,13 +1,16 @@
 package com.umfrancisco.shoppingcart.controller;
 
 import java.util.List;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.umfrancisco.shoppingcart.model.Product;
-import com.umfrancisco.shoppingcart.request.ProductRequest;
 import com.umfrancisco.shoppingcart.service.ProductService;
 import com.umfrancisco.shoppingcart.service.ProductServiceImpl;
 
@@ -15,19 +18,29 @@ import com.umfrancisco.shoppingcart.service.ProductServiceImpl;
 @RequestMapping("/api/product")
 public class ProductController {
 	
-	private final ProductService productService;
+	private final ProductService service;
 	
-	public ProductController(ProductServiceImpl productService) {
-		this.productService = productService;
+	public ProductController(ProductServiceImpl service) {
+		this.service = service;
 	}
 	
 	@GetMapping
 	public List<Product> findAll() {
-		return productService.findAll();
+		return service.findAll();
 	}
 	
 	@PostMapping
-	public Product save(@RequestBody ProductRequest product) {
-		return productService.save(product);
+	public Product save(@RequestBody Product product) {
+		return service.save(product);
+	}
+	
+	@PutMapping("/{productId}")
+	public void update(@RequestBody Product product, @PathVariable Long productId) {
+		
+	}
+	
+	@DeleteMapping("/{productId}")
+	public void delete(@PathVariable Long productId) {
+		
 	}
 }

@@ -1,111 +1,54 @@
 package com.umfrancisco.shoppingcart.service;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
-import com.umfrancisco.shoppingcart.exception.ProductNotFoundException;
-import com.umfrancisco.shoppingcart.model.Category;
 import com.umfrancisco.shoppingcart.model.Product;
-import com.umfrancisco.shoppingcart.repository.CategoryRepository;
 import com.umfrancisco.shoppingcart.repository.ProductRepository;
-import com.umfrancisco.shoppingcart.request.ProductRequest;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 	
-	private final ProductRepository productRepository;
-	private final CategoryRepository categoryRepository;
+	private final ProductRepository repository;
 	
-	public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository) {
-		this.productRepository = productRepository;
-		this.categoryRepository = categoryRepository;
+	public ProductServiceImpl(ProductRepository repository) {
+		this.repository = repository;
 	}
 
 	@Override
-	public Product save(ProductRequest request) {
-		Category category = categoryRepository.findByName(request.getCategory().getName());
-		request.setCategory(category);
-		var product = createProduct(request, category);
-		System.out.println(LocalDateTime.now()+": "+product);
-		return productRepository.save(product);
+	public Product save(Product product) {
+		return repository.save(product);
 	}
 	
-	private Product createProduct(ProductRequest request, Category category) {
-		String name = request.getName();
-		String brand = request.getBrand();
-		BigDecimal price = request.getPrice();
-		int inventory = request.getInventory();
-		String description = request.getDescription();
-		return new Product(name, brand, price, inventory, description, category);
+	@Override
+	public List<Product> findAll() {
+		return repository.findAll();
 	}
 
 	@Override
 	public Product findById(Long productId) {
-		return productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException("Product not found"));
+		return repository.findById(productId).get();
 	}
 
 	@Override
 	public void deleteById(Long productId) {
-		productRepository.findById(productId)
-			.ifPresentOrElse(productRepository::delete, () -> {
-				throw new ProductNotFoundException("Product not found");
-			});
+		var product = repository.findById(productId).get();
+		if (product != null) {
+			repository.delete(product);
+		}
 	}
 
 	@Override
-	public Product update(ProductRequest request, Long productId) {
-		return productRepository.findById(productId)
-				.map(existingProduct -> updateExistingProduct(existingProduct, request))
-				.map(productRepository::save)
-				.orElseThrow(() -> new ProductNotFoundException("Product not found"));
-	}
-	
-	private Product updateExistingProduct(Product existingProduct, ProductRequest request) {
-		existingProduct.setName(request.getName());
-		existingProduct.setBrand(request.getBrand());
-		existingProduct.setPrice(request.getPrice());
-		existingProduct.setInventory(request.getInventory());
-		existingProduct.setDescription(request.getDescription());
-		
-		var category = categoryRepository.findByName(request.getCategory().getName());
-		existingProduct.setCategory(category);
-		System.out.println(LocalDateTime.now()+": "+existingProduct);
-		return existingProduct;
-	}
-
-	@Override
-	public List<Product> findAll() {
-		return productRepository.findAll();
-	}
-
-	@Override
-	public List<Product> findByCategory(String category) {
-		return productRepository.findByCategoryName(category);
-	}
-
-	@Override
-	public List<Product> findByBrand(String brand) {
-		return productRepository.findByBrand(brand);
-	}
-
-	@Override
-	public List<Product> findByCategoryAndBrand(String category, String brand) {
-		return productRepository.findByCategoryNameAndBrand(category, brand);
-	}
-
-	@Override
-	public List<Product> findByName(String name) {
-		return productRepository.findByName(name);
-	}
-
-	@Override
-	public List<Product> findByBrandAndName(String brand, String name) {
-		return productRepository.findByBrandAndName(brand, name);
-	}
-
-	@Override
-	public Long countByBrandAndName(String brand, String name) {
-		return productRepository.countByBrandAndName(brand, name);
+	public Product update(Product product, Long productId) {
+		var updatedProduct = repository.findById(productId).get();
+		if (updatedProduct != null) {
+			updatedProduct.setName(product.getName());
+			updatedProduct.setBrand(product.getBrand());
+			updatedProduct.setPrice(product.getPrice());
+			updatedProduct.setQuantity(product.getQuantity());
+			updatedProduct.setDescription(product.getDescription());
+			updatedProduct.setImageUrl(product.getImageUrl());
+			updatedProduct.setCategory(product.getCategory());
+		}
+		return updatedProduct;
 	}
 }
