@@ -1,7 +1,8 @@
 package com.umfrancisco.shoppingcart.controller;
 
 import java.util.List;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,22 +26,36 @@ public class ProductController {
 	}
 	
 	@GetMapping
-	public List<Product> findAll() {
-		return service.findAll();
+	public ResponseEntity<List<Product>> findAll() {
+		return new ResponseEntity<>(service.findAll(), HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping
-	public Product save(@RequestBody Product product) {
-		return service.save(product);
+	public ResponseEntity<?> save(@RequestBody Product product) {
+		try {
+			return new ResponseEntity<>(service.save(product), HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	@PutMapping("/{productId}")
-	public void update(@RequestBody Product product, @PathVariable Long productId) {
-		
+	public ResponseEntity<String> update(@RequestBody Product product, @PathVariable Long productId) {
+		try {
+			service.update(product, productId);
+			return new ResponseEntity<>("Updated "+product, HttpStatus.ACCEPTED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@DeleteMapping("/{productId}")
-	public void delete(@PathVariable Long productId) {
-		
+	public ResponseEntity<String> delete(@PathVariable Long productId) {
+		try {
+			service.deleteById(productId);
+			return new ResponseEntity<>("Deleted product with id "+productId, HttpStatus.ACCEPTED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 }
