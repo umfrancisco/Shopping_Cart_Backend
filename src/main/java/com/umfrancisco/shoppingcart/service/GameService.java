@@ -6,6 +6,7 @@ import com.umfrancisco.shoppingcart.model.Game;
 public interface GameService {
 	List<Game> findAll();
 	Game save(Game game);
+	List<Game> saveAll(List<Game> games);
 	Game findById(Long gameId);
 	void deleteById(Long gameId);
 	Game update(Game game, Long gameId);

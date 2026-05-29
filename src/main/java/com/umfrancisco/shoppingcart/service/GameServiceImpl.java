@@ -21,6 +21,14 @@ public class GameServiceImpl implements GameService {
 	}
 	
 	@Override
+	public List<Game> saveAll(List<Game> games) {
+		for (var game : games) {
+			save(game);
+		}
+		return games;
+	}
+	
+	@Override
 	public List<Game> findAll() {
 		return repository.findAll();
 	}

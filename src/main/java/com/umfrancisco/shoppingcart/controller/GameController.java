@@ -39,6 +39,15 @@ public class GameController {
 		}
 	}
 	
+	@PostMapping("/list")
+	public ResponseEntity<?> saveAll(@RequestBody List<Game> games) {
+		try {
+			return new ResponseEntity<>(service.saveAll(games), HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	@PutMapping("/{gameId}")
 	public ResponseEntity<String> update(@RequestBody Game game, @PathVariable Long gameId) {
 		try {
