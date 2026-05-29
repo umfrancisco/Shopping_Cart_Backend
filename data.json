@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Batman Arkham Asylum",
+		"price": 90.00,
+		"quantity": 6,
+		"description": "Very good game",
+		"imageUrl": "https://raw.githubusercontent.com/umfrancisco/Shopping_Cart_Backend/refs/heads/main/images/batman.png",
+		"category": ["action", "adventure"]
+	},
+	{
+		"name": "Grand Theaft Auto IV",
+		"price": 89.90,
+		"quantity": 4,
+		"description": "Very good game",
+		"imageUrl": "https://raw.githubusercontent.com/umfrancisco/Shopping_Cart_Backend/refs/heads/main/images/gta-iv.png",
+		"category": ["action"]
+	},
+	{
+		"name": "Red Dead Redemption",
+		"price": 99.90,
+		"quantity": 8,
+		"description": "Very good game",
+		"imageUrl": "https://raw.githubusercontent.com/umfrancisco/Shopping_Cart_Backend/refs/heads/main/images/red-dead-redemption.png",
+		"category": ["western", "adventure"]
+	},
+	{
+		"name": "Skyrim",
+		"price": 87.90,
+		"quantity": 9,
+		"description": "Very good game",
+		"imageUrl": "https://raw.githubusercontent.com/umfrancisco/Shopping_Cart_Backend/refs/heads/main/images/skyrim.png",
+		"category": ["fantasy", "adventure"]
+	},
+	{
+		"name": "Sleeping Dogs",
+		"price": 70.00,
+		"quantity": 6,
+		"description": "Very good game",
+		"imageUrl": "https://raw.githubusercontent.com/umfrancisco/Shopping_Cart_Backend/refs/heads/main/images/sleeping-dogs.png",
+		"category": ["action", "adventure"]
+	}
+]

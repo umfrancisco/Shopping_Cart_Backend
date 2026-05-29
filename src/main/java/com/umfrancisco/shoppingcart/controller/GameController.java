@@ -16,7 +16,7 @@ import com.umfrancisco.shoppingcart.service.GameService;
 import com.umfrancisco.shoppingcart.service.GameServiceImpl;
 
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/api/game")
 public class GameController {
 	
 	private final GameService service;
@@ -39,7 +39,7 @@ public class GameController {
 		}
 	}
 	
-	@PutMapping("/{productId}")
+	@PutMapping("/{gameId}")
 	public ResponseEntity<String> update(@RequestBody Game game, @PathVariable Long gameId) {
 		try {
 			service.update(game, gameId);
@@ -49,7 +49,7 @@ public class GameController {
 		}
 	}
 	
-	@DeleteMapping("/{productId}")
+	@DeleteMapping("/{gameId}")
 	public ResponseEntity<String> delete(@PathVariable Long gameId) {
 		try {
 			service.deleteById(gameId);
